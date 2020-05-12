@@ -11,24 +11,34 @@
 "    remove-ring in VQ from 75.15 to 75.8 km.",
 */
 
-void se_ring_zap(float from_km, float to_km, 
+// NOTE: map the from_km and to_km to a cell index in the ray                                    
+// Q:Does this need to happend in the calling function? and send                                 
+// the gate/cell index?  YES!
+// parameters:
+// from_km gate index of ring in data 
+// to_km   gate index of ring in data 
+void se_ring_zap(size_t from_km, size_t to_km, 
 		 const float *data, float *newData, size_t nGates,
 		 float bad, size_t dgi_clip_gate, bool *boundary_mask)
 {
   // routine to remove a ring of data; e.g. a test pulse
   //
     float rr, r1, r2=1.e22;
-    int ii, mark, gg, g1, g2;
+    int ii, mark, gg;
+    size_t g1, g2;
     size_t nc;
     int nd, fn, a_speckle;
     const float *ss, *zz;
     float *tt;
     bool *bnd;
 
-    r1 = KM_TO_M(from_km); // get it to meters 
-    if(cmdq->uc_ctype == UTT_VALUE)
-	  r2 = KM_TO_M(to_km);
+    // TODO: move this to calling function ...
+    //r1 = KM_TO_M(from_km); // get it to meters 
+    //if(cmdq->uc_ctype == UTT_VALUE)
+    //	  r2 = KM_TO_M(to_km);
 
+    // TODO: does the clip gate matter?
+    // Q: What if ring crosses the clip gate? or is outside the clip_gate? 
     nc = dgi_clip_gate;
     if (dgi_clip_gate > nGates)
       nc = nGates;
@@ -44,8 +54,8 @@ void se_ring_zap(float from_km, float to_km,
     // TODO: map the from_km and to_km to a cell index in the ray
     // Q:Does this need to happend in the calling function? and send
     // the gate/cell index?
-    g1 = dd_cell_num(dgi->dds, 0, r1);
-    g2 = dd_cell_num(dgi->dds, 0, r2) +1;
+    g1 = from_km; // dd_cell_num(dgi->dds, 0, r1);
+    g2 = to_km;   // dd_cell_num(dgi->dds, 0, r2) +1;
 
     //ss += g1;
     bnd += g1;

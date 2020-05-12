@@ -1,8 +1,20 @@
-
+/*
+"    fix-vortex-velocities in <field>",
+"!  Replace angle brackets and argument types with appropriate arguments.",
+"!  Works only if the fields VS and VL are present. Operation replaces the",
+"!    original vield VR by recalculating the final dual prt velocity",
+"!    and eliminating some noisy gates.",
+"  ",
+"!  e.g.",
+"    fix-vortex-velocities in VG",
+*/
 
 /* #fix-vortex-velocities# */
 
 void se_fix_vortex_vels(const float *data, float *newData, size_t nGates,
+			const float *vs_data, const float *vl_data,
+			float vs_xmitted_freq, 
+			float vs_interpulse_time, float vl_interpulse_time,
 			float bad, size_t dgi_clip_gate, bool *boundary_mask) 
 {
     /* routine to remove discountinuities (freckles) from the data
@@ -11,6 +23,7 @@ void se_fix_vortex_vels(const float *data, float *newData, size_t nGates,
      * but switches to a trailing average once enough good points
      * have been encountered
      */
+  // TODO: how to handle these static values?
     static int vConsts[16], *ctr, level_bias;
     static double rcp_half_nyqL, d_round=.5;
     int fn, fnd, ii, jj, kk, mm, mark, idiff, vL, vS, levels;
@@ -24,7 +37,7 @@ void se_fix_vortex_vels(const float *data, float *newData, size_t nGates,
 
     const float *ss, *zz;
     float *tt;
-    float  *vl_ptr, *vs_ptr, *dst;
+    const float  *vl_ptr, *vs_ptr; // , *dst;
     bool *bnd;
     /*
      * boundary mask is set to 1 if the corresponding cell satisfies
@@ -40,46 +53,46 @@ void se_fix_vortex_vels(const float *data, float *newData, size_t nGates,
     memcpy(newData, data, nGates*sizeof(float));
     tt = newData;
 
-    if((fn_vl = dd_find_field(dgi, vl)) < 0) {
-	uii_printf("Vortex velocity field: %s not found\n", name);
-	seds->punt = YES;
-	return(-1);
-    }
-# ifdef NEW_ALLOC_SCHEME
-    vl_ptr = (short *)dds->qdat_ptrs[fn_vl];
-# else
-    vl_ptr = (short *)((char *)dds->rdat[fn_vl] +sizeof(struct paramdata_d));
-# endif
+    //    if((fn_vl = dd_find_field(dgi, vl)) < 0) {
+    //uii_printf("Vortex velocity field: %s not found\n", name);
+    //seds->punt = YES;
+    //return(-1);
+    //}
+    //# ifdef NEW_ALLOC_SCHEME
+    vl_ptr = vl_data; // (short *)dds->qdat_ptrs[fn_vl];
+    //# else
+    //vl_ptr = (short *)((char *)dds->rdat[fn_vl] +sizeof(struct paramdata_d));
+    //# endif
 
-    if((fn_vs = dd_find_field(dgi, vs)) < 0) {
-	uii_printf("Vortex velocity field: %s not found\n", name);
-	seds->punt = YES;
-	return(-1);
-    }
-# ifdef NEW_ALLOC_SCHEME
-    vs_ptr = (short *)dds->qdat_ptrs[fn_vs];
-# else
-    vs_ptr = (short *)((char *)dds->rdat[fn_vs] +sizeof(struct paramdata_d));
-# endif
+      //    if((fn_vs = dd_find_field(dgi, vs)) < 0) {
+    //	uii_printf("Vortex velocity field: %s not found\n", name);
+    //	seds->punt = YES;
+    //	return(-1);
+    //}
+    //# ifdef NEW_ALLOC_SCHEME
+    vs_ptr = vs_data; //(short *)dds->qdat_ptrs[fn_vs];
+    //# else
+    //    vs_ptr = (short *)((char *)dds->rdat[fn_vs] +sizeof(struct paramdata_d));
+    //# endif
 
-    bad = dds->parm[fn]->bad_data;
+    // bad = dds->parm[fn]->bad_data;
 
     if(seds->process_ray_count == 1) {
 	/*
 	 * set up constants
 	 * first calculate the average frequency
 	 */
-	parm = dds->parm[fn_vs];
-	scale = dds->parm[fn_vs]->parameter_scale;
-	bias = dds->parm[fn_vs]->parameter_bias;
+	//parm = dds->parm[fn_vs];
+	//scale = dds->parm[fn_vs]->parameter_scale;
+	//bias = dds->parm[fn_vs]->parameter_bias;
 	/*
 	 * this assumes the scale and the bias are the same for
 	 * all three fields
 	 */
-	fptr = &radd->freq1;
+      fptr = &radd->freq1;   // HERE <=====
 
 	for(d=0, ii=0, kk=1; ii < 5; ii++, kk<<=1) {
-	    if(kk & parm->xmitted_freq) {
+	  if(kk & vs_xmitted_freq) { // parm->xmitted_freq) {
 		d += *(fptr +ii);
 	    }
 	}
@@ -89,7 +102,7 @@ void se_fix_vortex_vels(const float *data, float *newData, size_t nGates,
 	 * get the PRFs
 	 */
 	for(ii=0, kk=1; ii < 5; ii++, kk<<=1) {
-	    if(kk & parm->interpulse_time) {
+	  if(kk & vs_interpulse_time) { // parm->interpulse_time) {
 		break;
 	    }
 	}
@@ -98,10 +111,10 @@ void se_fix_vortex_vels(const float *data, float *newData, size_t nGates,
 	 */
 	ipptr = &radd->interpulse_per1;
 	prfS = 1./(*(ipptr + ii) *.001);
-	parm = dds->parm[fn_vl];
+	// parm = dds->parm[fn_vl];
 
 	for(ii=0, kk=1; ii < 5; ii++, kk<<=1) {
-	    if(kk & parm->interpulse_time) {
+	  if(kk & vl_interpulse_time) { // parm->interpulse_time) {
 		break;
 	    }
 	}
