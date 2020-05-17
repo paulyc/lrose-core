@@ -1,4 +1,5 @@
 
+#include <Solo/GeneralDefinitions.hh>
 /*
  * se_cpy_field
  * se_dir
@@ -26,7 +27,7 @@
 
 /* #forced-unfolding# */
 
-int se_funfold(const float *data, float *newData, size_t nGates,
+void se_funfold(const float *data, float *newData, size_t nGates,
 	       float nyquist_velocity, float dds_radd_eff_unamb_vel,
 	       float azimuth_angle_degrees, float elevation_angle_degrees,
 	       float ew_wind, float ns_wind, float ud_wind,
@@ -36,20 +37,17 @@ int se_funfold(const float *data, float *newData, size_t nGates,
 	       float bad_data_value, size_t dgi_clip_gate, 
 	       bool *boundary_mask)
 {
-    int below;
-    char *name;
     float ctr, nyqv, rcp_nyqi;
 
     size_t nc;
-    int nd, nchar, bad, thr_bad, fn, fgg, abs_diff;
+    int nd, nchar, bad, fn, abs_diff;
     int gg, ii, jj, kk, nn, scaled_ctr, mark, scaled_nyqv, scaled_nyqi, idiff;
-    short *anchor;
     const float *ss, *zz;
     float *tt;
     short *thr=NULL;
     bool *bnd;
 
-    nyqv = seds_nyquist_velocity ? seds_nyquist_velocity
+    nyqv = nyquist_velocity ? nyquist_velocity
 	  : dds_radd_eff_unamb_vel;
     if(nyqv <=0)
       throw "ERROR, nyquist velocity must be greater than zero";

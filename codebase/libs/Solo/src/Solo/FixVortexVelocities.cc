@@ -1,3 +1,5 @@
+#include <Solo/GeneralDefinitions.hh>
+
 /*
 "    fix-vortex-velocities in <field>",
 "!  Replace angle brackets and argument types with appropriate arguments.",

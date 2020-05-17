@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 // use DoradeData.hh
 //# define CART_ANGLE(x) ((double)90.-(x))
@@ -23,7 +24,7 @@
 
 enum Where {ABOVE, BELOW, BETWEEN};
 enum Logical {AND, OR, XOR};
-enum Surface_Type = {SURFACE, ONLY_SURFACE, SECOND_TRIP};
+enum Surface_Type {SURFACE, ONLY_SURFACE, SECOND_TRIP};
 
 // use DoradeData.hh radar_type_t or lidar_type_t
 /* Dorade radar types */

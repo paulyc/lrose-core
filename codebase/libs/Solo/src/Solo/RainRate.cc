@@ -1,4 +1,4 @@
-
+#include <Solo/GeneralDefinitions.hh>
 
 /*
 It the literature, the standard legacy way for converting reflectivity to rain rate is as follows:
@@ -46,14 +46,14 @@ void se_rain_rate(float d_const, const float *data, float *newData, size_t nGate
   int ii, jj, fn, fns, fnd, size=0, mark, ns, nd;
   size_t nc;
   int dst_bad;
-  int rescale = NO;
+  // int rescale = NO;
   char *a=NULL, *b=NULL;
   float f_const;
   bool *bnd;
-  const float *ss;
-  float *tt, *zz;
+  const float *ss, *zz;
+  float *tt;
   double d, rcp_scale, srs_bias, dst_scale, dst_bias;
-  double d_const;
+  // double d_const;
   double xx;
   double A=.003333333, X=.7142857;
 

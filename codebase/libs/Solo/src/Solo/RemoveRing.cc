@@ -1,4 +1,6 @@
 
+#include <Solo/GeneralDefinitions.hh>
+
 /* #remove-ring# */
 
 /*
