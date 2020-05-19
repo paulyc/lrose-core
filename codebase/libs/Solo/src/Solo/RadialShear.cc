@@ -1,4 +1,5 @@
 
+#include <Solo/GeneralDefinitions.hh>
 
 /*
 "    offset-for-radial-shear is <integer> gates",

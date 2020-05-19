@@ -1,30 +1,20 @@
-/*
-# define NEW_ALLOC_SCHEME
 
-# include <dorade_headers.h>
-# include <solo_editor_structs.h>
-# include <dd_math.h>
-# include <ui.h>
-# include <ui_error.h>
-# include <stdio.h>
-# include <function_decl.h>
-# include <dgi_func_decl.h>
-# include <glib.h>
+#include <Solo/GeneralDefinitions.hh>
+#include <Solo/dd_math.h>
 
-extern GString *gs_complaints;
+double d_angdiff(double a1, double a2)
+{
+  double d=a2-a1;
 
-
-# define         BB_USE_FGG 0
-# define     BB_USE_AC_WIND 1
-# define  BB_USE_LOCAL_WIND 2
-*/
-
-
-#include "Solo/GeneralDefinitions.hh"
-
+  if( d < -180. )
+    return(d+360.);
+  if( d > 180. )
+    return(d-360.);
+  return(d);
+}
 
 /* c------------------------------------------------------------------------ */
-
+/*
 int alt_gecho(double min_grad,
 	      int *zmax_cell,
 	      double elev,
@@ -34,12 +24,12 @@ int alt_gecho(double min_grad,
 	      double dds_asib_roll,
 	      double dds_cfac_rot_angle_corr)
 
-/*
-(dgi, min_grad, zmax_cell)
-  DGI_PTR dgi;
-  double min_grad;
-  int *zmax_cell;
-*/
+//
+//(dgi, min_grad, zmax_cell)
+//  DGI_PTR dgi;
+//  double min_grad;
+//  int *zmax_cell;
+//
 {
   //    DDS_PTR dds=dgi->dds;
     int pn, ii, jj, kk, mm, mark, zmax = 0, ival;
@@ -55,9 +45,9 @@ int alt_gecho(double min_grad,
 		  , "DBZ");
 	return(-1);
     }
-    /* assume this routine is not called unless the antenna is
-     * in a position to see the ground
-     */
+    // assume this routine is not called unless the antenna is
+     // in a position to see the ground
+     //
     // TODO: is gs the distance between gates?
     gs = dds->celvc->dist_cells[1] - dds->celvc->dist_cells[0];
     ss = data; // (short *)dds->qdat_ptrs[pn];
@@ -69,8 +59,8 @@ int alt_gecho(double min_grad,
     rot_angle = dds_asib_rotation_angle + dds_asib_roll +
       dds_cfac_rot_angle_corr;
 
-    /* scaled change in dBz over two gates */
-    /* min_grad = .08 => ~20 dBz over two gates. */
+    // scaled change in dBz over two gates 
+    // min_grad = .08 => ~20 dBz over two gates. 
        
     ng_grad = (int)(1.075 * (1./fabs (sin (elev)) +1.));
     if (ng_grad < 3 || ng_grad > 60)
@@ -99,14 +89,15 @@ int alt_gecho(double min_grad,
 	  mark_max = ii; zmax = ival;
        }
     }
-				/*
-    printf ("%8.2f %8.4f %4d %4d %4d %.1f\n"
-	    , rot_angle, elev, ng_grad, mark_grad, mark_max
-	    , smin_grad *.01);
-				 */
+				
+//    printf ("%8.2f %8.4f %4d %4d %4d %.1f\n"
+	//    , rot_angle, elev, ng_grad, mark_grad, mark_max
+	  //  , smin_grad *.01);
+				 
     *zmax_cell = mark_max;
     return (mark_grad);
 }
+*/
 
 /* c------------------------------------------------------------------------ */
 
@@ -121,6 +112,7 @@ int alt_gecho(double min_grad,
     only_2_trip = strstr( cmds->uc_text
 			 , "ly-sec") != NULL; // only-second-trip-surface 
 */
+/*
 // enum Surface_Type = {SURFACE, ONLY_SURFACE, SECOND_TRIP}; 
 void se_ac_surface_tweak(Surface_Type which_removal,
 			 float optimal_beamwidth,
@@ -137,11 +129,11 @@ void se_ac_surface_tweak(Surface_Type which_removal,
 			 size_t dgi_clip_gate,
 			 bool *boundary_mask)
 {
-    /* 
-     * #remove-surface#
-     * #remove-only-surface#
-     * #remove-only-second-trip-surface#
-     */
+  // 
+  // #remove-surface#
+  // #remove-only-surface#
+  // #remove-only-second-trip-surface#
+  //
     int ii, nc, nn;
     int navg, sn;
     int g1, g2, gx, gate_shift;
@@ -157,29 +149,29 @@ void se_ac_surface_tweak(Surface_Type which_removal,
     double rot_ang, earthr, deg_elev, bmwidth, elev_limit = -.0001;
     double range_val, min_range, max_range, alt, range1;
     double ground_intersect, footprint, surf_shift, fudge=1.;
-    double d, elev, tan_elev, half_vbw, min_grad = .08;	/* dBz/meter */
+    double d, elev, tan_elev, half_vbw, min_grad = .08;	// dBz/meter 
     //struct dd_general_info *dgi, *dd_window_dgi();
     //struct dds_structs *dds;
     //struct platform_i *asib;
     //struct radar_angles *ra;
     //struct solo_edit_stuff *seds, *return_sed_stuff();
 
-    /* TODO: how to do this? when we are using the first ray? may not be used
-    if(seds->process_ray_count == 1) {
-	mark = 0;
-    }
-    */
+    // TODO: how to do this? when we are using the first ray? may not be used
+    //if(seds->process_ray_count == 1) {
+    //	mark = 0;
+    //}
+    //
     switch (which_removal) {
     case SURFACE:
       break;
     case SURFACE_ONLY:
       // surface_only = strstr( cmds->uc_text
-      //			  , "ly-sur") != NULL; /* only-surface */
+      //			  , "ly-sur") != NULL; // only-surface 
       surface_only = true;
       break;
     case SECOND_TRIP:
       //    only_2_trip = strstr( cmds->uc_text
-      //		 , "ly-sec") != NULL; /* only-second-trip-surface */
+      //		 , "ly-sec") != NULL; // only-second-trip-surface 
       only_2_trip = true;
       break;
     }
@@ -191,13 +183,13 @@ void se_ac_surface_tweak(Surface_Type which_removal,
     bnd = boundary_mask;
     //dds = dgi->dds;
     //asib = dds->asib;
-    /*
-     * we probably need to make a calculation to determine if
-     * the ground echo goes above the aircraft i.e. is the distance
-     * (arc length) defined by a ray of length max_range rotated
-     * through half the beam width greater than or equal to the
-     * altitude of the aircraft?
-     */
+    //
+    // we probably need to make a calculation to determine if
+    // the ground echo goes above the aircraft i.e. is the distance
+    // (arc length) defined by a ray of length max_range rotated
+    // through half the beam width greater than or equal to the
+    // altitude of the aircraft?
+    ///
     bmwidth = RADIANS(seds_optimal_beamwidth ? seds_optimal_beamwidth :
 	  dgi_dds_radd_vert_beam_width);
     half_vbw = .5 * bmwidth;
@@ -208,11 +200,11 @@ void se_ac_surface_tweak(Surface_Type which_removal,
     elev = dds_ra_elevation;
 
     if (surface_only && getenv_ALTERNATE_GECHO) { // (aa = getenv ("ALTERNATE_GECHO"))) {
-       if( elev > -.002)	/* -.10 degrees */
+      if( elev > -.002)	// -.10 degrees 
 	 { return; }
        alt_gecho_flag = true;
        if (d > 0)
-	 { min_grad = d; }	/* dbz per meter */
+	 { min_grad = d; }	// dbz per meter
     }
 
     if( !surface_only && (d = max_range * fudge * bmwidth) >= alt) {
@@ -240,8 +232,8 @@ void se_ac_surface_tweak(Surface_Type which_removal,
 		       tan_elev*tan_elev));
 	if(ground_intersect > max_range || ground_intersect < 0 )
 	      return;
-	/*
-	 */
+	
+	
 	g1 = dd_cell_num(dgi->dds, 0, range1);
     }
     gate_shift = seds->surface_gate_shift;
@@ -270,7 +262,7 @@ void se_ac_surface_tweak(Surface_Type which_removal,
 	  *ss++ = bad;
 
 }
-
+*/
 /* c------------------------------------------------------------------------ */
 
 /* #remove-storm-motion# */
@@ -290,20 +282,13 @@ void se_remove_storm_motion(
 {
     /* remove the aircraft motion from velocities
      */
-  //    struct ui_command *cmdq=cmds+1; /* point to the first argument */
     int ii, nn, mark, pn, sn;
     size_t nc;
     int scaled_vel;
     const float *ss, *zz;
     float *tt;
     bool  *bnd;
-    //short vx;
-    //float scale, bias;
     double d, az, cosEl, rcp_cosEl, theta, cosTheta, adjust, scaled_adjust;
-    //struct dd_general_info *dgi, *dd_window_dgi();
-    //struct dds_structs *dds;
-    //struct solo_edit_stuff *seds, *return_sed_stuff();
-    double d_angdiff();
 
     bnd = boundary_mask;
     ss = data;
