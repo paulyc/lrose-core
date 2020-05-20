@@ -200,14 +200,16 @@ public:
 		     bool *boundary_mask, const bool *bad_flag_mask,
 		     bool *updated_bad_flag_mask);
 
+  // Sets bad flag mask to true if data == bad; otherwise, bad flag mask = false
   void CopyBadFlags(const float *data, size_t nGates,
 		    float bad, size_t dgi_clip_gate,
 		    bool *boundary_mask, bool *bad_flag_mask);
 
-  void FlaggedAssign(float constant, const float *data, size_t nGates,
+  // Assign all flagged gates to a constant value
+  void FlaggedAssign(float constant, const float *data, float *newData, size_t nGates,
 		     size_t dgi_clip_gate,
 		     bool *boundary_mask, bool *bad_flag_mask);
-
+  // not implemented
   void FlaggedCopy(const float *data, float *newData, size_t nGates,
 		   size_t dgi_clip_gate,
 		   bool *boundary_mask, bool *bad_flag_mask);
@@ -223,6 +225,7 @@ public:
 		    float bad, size_t dgi_clip_gate,
 		    bool *boundary_mask, bool *bad_flag_mask);
 
+  // 
   void ThresholdFieldAbove(float scaled_thr,
 			   int first_good_gate,
 			   const float *data, const float *thr_data, size_t nGates,
@@ -246,10 +249,6 @@ public:
 
   void ForceUnfolding(const float *data, float *newData, size_t nGates,
 		      float nyquist_velocity, float dds_radd_eff_unamb_vel,
-		      float azimuth_angle_degrees, float elevation_angle_degrees,
-		      float ew_wind, float ns_wind, float ud_wind,
-		      int max_pos_folds, int max_neg_folds,
-		      size_t ngates_averaged,
 		      float center,
 		      float bad_data_value, size_t dgi_clip_gate,
 		      bool *boundary_mask);

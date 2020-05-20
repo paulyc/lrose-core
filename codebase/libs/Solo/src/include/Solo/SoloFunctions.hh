@@ -126,6 +126,11 @@ void se_flag_freckles(float freckle_threshold, size_t freckle_avg_count,
                       float bad, size_t dgi_clip_gate,
                       bool *boundary_mask, bool *bad_flag_mask);
 
+// flagged-assign
+void se_assign_value(float constant, const float *data, float *newData, size_t nGates,
+                    size_t dgi_clip_gate,
+                    bool *boundary_mask, bool *bad_flag_mask);
+
 void se_threshold_field(Where where, float scaled_thr1, float scaled_thr2,
                         int first_good_gate,
                         const float *data, const float *thr_data, size_t nGates,
@@ -136,10 +141,6 @@ void se_threshold_field(Where where, float scaled_thr1, float scaled_thr2,
 
 void se_funfold(const float *data, float *newData, size_t nGates,
 		float nyquist_velocity, float dds_radd_eff_unamb_vel,
-		float azimuth_angle_degrees, float elevation_angle_degrees,
-		float ew_wind, float ns_wind, float ud_wind,
-		int max_pos_folds, int max_neg_folds,
-		size_t ngates_averaged,
 		float center,
 		float bad_data_value, size_t dgi_clip_gate,
 		bool *boundary_mask);

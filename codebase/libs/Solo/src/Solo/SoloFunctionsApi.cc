@@ -658,14 +658,14 @@ void SoloFunctionsApi::CopyBadFlags(const float *data, size_t nGates,
   }
 }
 
-void FlaggedAssign(float constant, const float *data, size_t nGates,
+void FlaggedAssign(float constant, const float *data, float *newData, size_t nGates,
 		   size_t dgi_clip_gate,
 		   bool *boundary_mask, bool *bad_flag_mask) {
-  //  try {
-  //  se_copy_bad_flags(data, nGates, bad, dgi_clip_gate, boundary_mask, bad_flag_mask);
-  //} catch(...) {
-  throw "Not implemented"; // "Something bad happened during script evaluation";
-    //}
+  try {
+    se_assign_value(constant, data, newData, nGates, dgi_clip_gate, boundary_mask, bad_flag_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
 }
 
 
@@ -771,20 +771,12 @@ void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
 
 void ForceUnfolding(const float *data, float *newData, size_t nGates,
 		    float nyquist_velocity, float dds_radd_eff_unamb_vel,
-		    float azimuth_angle_degrees, float elevation_angle_degrees,
-		    float ew_wind, float ns_wind, float ud_wind,
-		    int max_pos_folds, int max_neg_folds,
-		    size_t ngates_averaged,
 		    float center,
 		    float bad_data_value, size_t dgi_clip_gate,
 		    bool *boundary_mask) {
   try {
     se_funfold(data, newData, nGates,
 	       nyquist_velocity, dds_radd_eff_unamb_vel,
-	       azimuth_angle_degrees, elevation_angle_degrees,
-	       ew_wind, ns_wind, ud_wind,
-	       max_pos_folds, max_neg_folds,
-	       ngates_averaged,
 	       center,
 	       bad_data_value, dgi_clip_gate,
 	       boundary_mask);

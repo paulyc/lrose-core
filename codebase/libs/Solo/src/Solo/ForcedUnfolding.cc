@@ -29,10 +29,6 @@
 
 void se_funfold(const float *data, float *newData, size_t nGates,
 	       float nyquist_velocity, float dds_radd_eff_unamb_vel,
-	       float azimuth_angle_degrees, float elevation_angle_degrees,
-	       float ew_wind, float ns_wind, float ud_wind,
-	       int max_pos_folds, int max_neg_folds,
-	       size_t ngates_averaged,
 	       float center,
 	       float bad_data_value, size_t dgi_clip_gate, 
 	       bool *boundary_mask)
