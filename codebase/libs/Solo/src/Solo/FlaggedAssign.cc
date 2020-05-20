@@ -6,10 +6,11 @@
 
 void se_assign_value(float constant, const float *data, float *newData, size_t nGates,
 		    size_t dgi_clip_gate,
-		    bool *boundary_mask, bool *bad_flag_mask)
+		    bool *boundary_mask, const bool *bad_flag_mask)
 {
     int ii, jj, fn, fns, fnd, size=0, mark, ns, nd, nc, bad, scaled_const;
-    bool *bnd, *flag;
+    bool *bnd;
+    const bool *flag;
     const float *ss, *zz;
     float  *tt;
 

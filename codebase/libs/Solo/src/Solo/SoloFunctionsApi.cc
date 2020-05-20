@@ -660,7 +660,7 @@ void SoloFunctionsApi::CopyBadFlags(const float *data, size_t nGates,
 
 void FlaggedAssign(float constant, const float *data, float *newData, size_t nGates,
 		   size_t dgi_clip_gate,
-		   bool *boundary_mask, bool *bad_flag_mask) {
+		   bool *boundary_mask, const bool *bad_flag_mask) {
   try {
     se_assign_value(constant, data, newData, nGates, dgi_clip_gate, boundary_mask, bad_flag_mask);
   } catch(...) {
@@ -668,10 +668,9 @@ void FlaggedAssign(float constant, const float *data, float *newData, size_t nGa
   }
 }
 
-
 void FlaggedCopy(const float *data, float *newData, size_t nGates,
 		 size_t dgi_clip_gate,
-		 bool *boundary_mask, bool *bad_flag_mask) {
+		 bool *boundary_mask, const bool *bad_flag_mask) {
   //  try {
   //??     se_copy_bad_flags(data, nGates, bad, dgi_clip_gate, boundary_mask, bad_flag_mask);
   //  } catch(...) {
@@ -714,7 +713,7 @@ void ThresholdFieldAbove(float scaled_thr,
 			 const float *data, const float *thr_data, size_t nGates,
 			 float *newData,
 			 float bad, float thr_bad, size_t dgi_clip_gate,
-			 bool *boundary_mask, bool *bad_flag_mask) {
+			 bool *boundary_mask, const bool *bad_flag_mask) {
   try {
     Where where = ABOVE;
     float threshold2 = 0.0;
@@ -734,7 +733,7 @@ void ThresholdFieldBelow(float scaled_thr,
 			 const float *data, const float *thr_data, size_t nGates,
 			 float *newData,
 			 float bad, float thr_bad, size_t dgi_clip_gate,
-			 bool *boundary_mask, bool *bad_flag_mask) {
+			 bool *boundary_mask, const bool *bad_flag_mask) {
   try {
     Where where = BELOW;
     float threshold2 = 0.0;
@@ -754,7 +753,7 @@ void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
 			   const float *data, const float *thr_data, size_t nGates,
 			   float *newData,
 			   float bad, float thr_bad, size_t dgi_clip_gate,
-			   bool *boundary_mask, bool *bad_flag_mask) {
+			   bool *boundary_mask, const bool *bad_flag_mask) {
   try {
     Where where = BETWEEN;
     se_threshold_field(where, scaled_thr1, scaled_thr2,

@@ -208,11 +208,11 @@ public:
   // Assign all flagged gates to a constant value
   void FlaggedAssign(float constant, const float *data, float *newData, size_t nGates,
 		     size_t dgi_clip_gate,
-		     bool *boundary_mask, bool *bad_flag_mask);
+		     bool *boundary_mask, const bool *bad_flag_mask);
   // not implemented
   void FlaggedCopy(const float *data, float *newData, size_t nGates,
 		   size_t dgi_clip_gate,
-		   bool *boundary_mask, bool *bad_flag_mask);
+		   bool *boundary_mask, const bool *bad_flag_mask);
   
   void FlagFreckles(float freckle_threshold, size_t freckle_avg_count,
 		    const float *data, size_t nGates,
@@ -231,21 +231,21 @@ public:
 			   const float *data, const float *thr_data, size_t nGates,
 			   float *newData,
 			   float bad, float thr_bad, size_t dgi_clip_gate,
-			   bool *boundary_mask, bool *bad_flag_mask);
+			   bool *boundary_mask, const bool *bad_flag_mask);
 
   void ThresholdFieldBelow(float scaled_thr,
 			   int first_good_gate,
 			   const float *data, const float *thr_data, size_t nGates,
 			   float *newData,
 			   float bad, float thr_bad, size_t dgi_clip_gate,
-			   bool *boundary_mask, bool *bad_flag_mask);
+			   bool *boundary_mask, const bool *bad_flag_mask);
 
   void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
 			     int first_good_gate,
 			     const float *data, const float *thr_data, size_t nGates,
 			     float *newData,
 			     float bad, float thr_bad, size_t dgi_clip_gate,
-			     bool *boundary_mask, bool *bad_flag_mask);
+			     bool *boundary_mask, const bool *bad_flag_mask);
 
   void ForceUnfolding(const float *data, float *newData, size_t nGates,
 		      float nyquist_velocity, float dds_radd_eff_unamb_vel,

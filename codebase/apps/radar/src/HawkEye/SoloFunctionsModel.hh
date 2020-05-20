@@ -149,9 +149,52 @@ public:
   string XorBadFlagsBetween(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
 			 float constantLower, float constantUpper, size_t clip_gate, float bad_data_value,
 			 string newFieldName);
-
+  
   string CopyBadFlags(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
 		      size_t clip_gate, float bad_data_value);
+
+  // string flagFieldName
+  string FlaggedAssign(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+		       float constant,
+		       size_t clip_gate, string maskFieldName);
+  // Not implemented
+  string FlaggedCopy(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+		       size_t clip_gate, string maskFieldName);
+
+  string FlagFreckles(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+		      float freckle_threshold, size_t freckle_avg_count,
+		      size_t clip_gate, float bad_data_value);
+
+  string FlagGlitches(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+		      float deglitch_threshold, int deglitch_radius,
+		      int deglitch_min_gates,
+		      size_t clip_gate, float bad_data_value);
+
+  string ThresholdFieldAbove(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+			     float scaled_thr,
+			     int first_good_gate, string threshold_field,
+			     float threshold_bad_data_value,
+			     size_t clip_gate, float bad_data_value,
+			     string bad_flag_mask_field_name);
+
+  string ThresholdFieldBelow(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+			     float scaled_thr,
+			     int first_good_gate, string threshold_field,
+			     float threshold_bad_data_value,
+			     size_t clip_gate, float bad_data_value,
+			     string bad_flag_mask_field_name);
+
+  string ThresholdFieldBetween(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+			       float lower_threshold, float upper_threshold,
+			       int first_good_gate, string threshold_field,
+			       float threshold_bad_data_value,
+			       size_t clip_gate, float bad_data_value,
+			       string bad_flag_mask_field_name);
+
+  string ForceUnfolding(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+		 float nyquist_velocity, 
+		 float center,
+		 float bad_data_value, size_t dgi_clip_gate);
   
 /*
   string BBUnfoldAircraftWind(string fieldName, RadxVol *vol,
@@ -240,6 +283,17 @@ private:
 			   string maskFieldName,
 			    void (SoloFunctionsApi::*function) (float, float, const float *, size_t,
 			       float, size_t, bool *, const bool *, bool *), SoloFunctionsApi& api);
+
+  string _generalThresholdFx(string fieldName,  RadxVol *vol, int rayIdx, int sweepIdx,
+		      float threshold,
+		      int first_good_gate, string threshold_field,
+		      float threshold_bad_data_value,
+		      size_t clip_gate, float bad_data_value,
+		      string maskFieldName,
+		      void (SoloFunctionsApi::*function) (float, int,  const float*, 
+							  const float *, size_t, float *, float, float, size_t,
+							  bool *, const bool *), SoloFunctionsApi& api);
+
 };
 
 
