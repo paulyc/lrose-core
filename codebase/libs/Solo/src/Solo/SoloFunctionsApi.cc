@@ -658,6 +658,231 @@ void SoloFunctionsApi::CopyBadFlags(const float *data, size_t nGates,
   }
 }
 
+void FlaggedAssign(float constant, const float *data, size_t nGates,
+		   size_t dgi_clip_gate,
+		   bool *boundary_mask, bool *bad_flag_mask) {
+  //  try {
+  //  se_copy_bad_flags(data, nGates, bad, dgi_clip_gate, boundary_mask, bad_flag_mask);
+  //} catch(...) {
+  throw "Not implemented"; // "Something bad happened during script evaluation";
+    //}
+}
+
+
+void FlaggedCopy(const float *data, float *newData, size_t nGates,
+		 size_t dgi_clip_gate,
+		 bool *boundary_mask, bool *bad_flag_mask) {
+  //  try {
+  //??     se_copy_bad_flags(data, nGates, bad, dgi_clip_gate, boundary_mask, bad_flag_mask);
+  //  } catch(...) {
+  throw "Not implemented"; // "Something bad happened during script evaluation";
+    //  }
+}
+
+
+void FlagFreckles(float freckle_threshold, size_t freckle_avg_count,
+		  const float *data, size_t nGates,
+		  float bad, size_t dgi_clip_gate,
+		  bool *boundary_mask, bool *bad_flag_mask) {
+  try {
+    se_flag_freckles(freckle_threshold, freckle_avg_count,
+		     data, nGates,
+		     bad, dgi_clip_gate,
+		     boundary_mask, bad_flag_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void FlagGlitches(float deglitch_threshold, int deglitch_radius,
+		  int deglitch_min_bins,  // aka deglitch_min_gates                                
+		  const float *data, size_t nGates,
+		  float bad, size_t dgi_clip_gate,
+		  bool *boundary_mask, bool *bad_flag_mask){
+  try {
+    se_flag_glitches(deglitch_threshold, deglitch_radius,
+		     deglitch_min_bins, data, nGates,
+		     bad, dgi_clip_gate,
+		     boundary_mask, bad_flag_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void ThresholdFieldAbove(float scaled_thr,
+			 int first_good_gate,
+			 const float *data, const float *thr_data, size_t nGates,
+			 float *newData,
+			 float bad, float thr_bad, size_t dgi_clip_gate,
+			 bool *boundary_mask, bool *bad_flag_mask) {
+  try {
+    Where where = ABOVE;
+    float threshold2 = 0.0;
+    se_threshold_field(where, scaled_thr, threshold2,
+		       first_good_gate,
+		       data, thr_data, nGates,
+		       newData,
+		       bad, thr_bad, dgi_clip_gate,
+		       boundary_mask, bad_flag_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void ThresholdFieldBelow(float scaled_thr,
+			 int first_good_gate,
+			 const float *data, const float *thr_data, size_t nGates,
+			 float *newData,
+			 float bad, float thr_bad, size_t dgi_clip_gate,
+			 bool *boundary_mask, bool *bad_flag_mask) {
+  try {
+    Where where = BELOW;
+    float threshold2 = 0.0;
+    se_threshold_field(where, scaled_thr, threshold2,
+		       first_good_gate,
+		       data, thr_data, nGates,
+		       newData,
+		       bad, thr_bad, dgi_clip_gate,
+		       boundary_mask, bad_flag_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
+			   int first_good_gate,
+			   const float *data, const float *thr_data, size_t nGates,
+			   float *newData,
+			   float bad, float thr_bad, size_t dgi_clip_gate,
+			   bool *boundary_mask, bool *bad_flag_mask) {
+  try {
+    Where where = BETWEEN;
+    se_threshold_field(where, scaled_thr1, scaled_thr2,
+		       first_good_gate,
+		       data, thr_data, nGates,
+		       newData,
+		       bad, thr_bad, dgi_clip_gate,
+		       boundary_mask, bad_flag_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+
+void ForceUnfolding(const float *data, float *newData, size_t nGates,
+		    float nyquist_velocity, float dds_radd_eff_unamb_vel,
+		    float azimuth_angle_degrees, float elevation_angle_degrees,
+		    float ew_wind, float ns_wind, float ud_wind,
+		    int max_pos_folds, int max_neg_folds,
+		    size_t ngates_averaged,
+		    float center,
+		    float bad_data_value, size_t dgi_clip_gate,
+		    bool *boundary_mask) {
+  try {
+    se_funfold(data, newData, nGates,
+	       nyquist_velocity, dds_radd_eff_unamb_vel,
+	       azimuth_angle_degrees, elevation_angle_degrees,
+	       ew_wind, ns_wind, ud_wind,
+	       max_pos_folds, max_neg_folds,
+	       ngates_averaged,
+	       center,
+	       bad_data_value, dgi_clip_gate,
+	       boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+
+void MergeFields(const float *data1, const float *data2,
+		 float *newData, size_t nGates,
+		 float bad, size_t dgi_clip_gate,
+		 bool *boundary_mask) {
+  try {
+    se_merge_fields(data1, data2,
+		    newData, nGates,
+		    bad, dgi_clip_gate,
+		    boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void RemoveRing(size_t from_km, size_t to_km,
+		const float *data, float *newData, size_t nGates,
+		float bad, size_t dgi_clip_gate, bool *boundary_mask) {
+  try {
+    se_ring_zap(from_km, to_km,
+		data, newData, nGates,
+		bad, dgi_clip_gate, boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void RainRate(float d_const, const float *data, float *newData, size_t nGates,
+	      float bad, size_t dgi_clip_gate,
+	      bool *boundary_mask) {
+  try {
+    se_rain_rate(d_const, data, newData, nGates,
+		 bad, dgi_clip_gate,
+		 boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void Abs(const float *data, float *newData, size_t nGates,
+	 float bad, size_t dgi_clip_gate, bool *boundary_mask) {
+  try {
+    se_absolute_value(data, newData, nGates,
+		      bad, dgi_clip_gate, boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void Exp(float f_const, const float *data, float *newData, size_t nGates,
+	 float bad, size_t dgi_clip_gate,
+	 bool *boundary_mask) {
+  try {
+    se_mult_const(f_const, data, newData, nGates,
+		  bad, dgi_clip_gate,
+		  boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+
+void RadialShear(size_t seds_gate_diff_interval, const float *data, float *newData,
+		 size_t nGates,
+		 float bad_data_value, size_t dgi_clip_gate,
+		 bool *boundary_mask) {
+  try {
+    se_radial_shear(seds_gate_diff_interval, data, newData,
+		    nGates,
+		    bad_data_value, dgi_clip_gate,
+		    boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
+void RemoveStormMotion(float wind, float speed, float dgi_dd_rotation_angle,
+		       float dgi_dd_elevation_angle,
+		       const float *data, float *new_data, size_t nGates,
+		       float bad, size_t dgi_clip_gate, bool *boundary_mask) {
+  try {
+    se_remove_storm_motion(wind, speed, dgi_dd_rotation_angle,
+			   dgi_dd_elevation_angle,
+			   data, new_data, nGates,
+			   bad, dgi_clip_gate, boundary_mask);
+  } catch(...) {
+    throw "Something bad happened during script evaluation";
+  }
+}
+
 /*
 void SoloFunctionsApi::se_flag_glitches(float deglitch_threshold, int deglitch_radius,
                       int deglitch_min_bins,  // aka deglitch_min_gates                                  

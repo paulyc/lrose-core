@@ -212,13 +212,79 @@ public:
 		   size_t dgi_clip_gate,
 		   bool *boundary_mask, bool *bad_flag_mask);
   
-  void FlagFreckles();
+  void FlagFreckles(float freckle_threshold, size_t freckle_avg_count,
+		    const float *data, size_t nGates,
+		    float bad, size_t dgi_clip_gate,
+		    bool *boundary_mask, bool *bad_flag_mask);
  
   void FlagGlitches(float deglitch_threshold, int deglitch_radius,
 		    int deglitch_min_bins,  // aka deglitch_min_gates
 		    const float *data, size_t nGates,
 		    float bad, size_t dgi_clip_gate,
 		    bool *boundary_mask, bool *bad_flag_mask);
+
+  void ThresholdFieldAbove(float scaled_thr,
+			   int first_good_gate,
+			   const float *data, const float *thr_data, size_t nGates,
+			   float *newData,
+			   float bad, float thr_bad, size_t dgi_clip_gate,
+			   bool *boundary_mask, bool *bad_flag_mask);
+
+  void ThresholdFieldBelow(float scaled_thr,
+			   int first_good_gate,
+			   const float *data, const float *thr_data, size_t nGates,
+			   float *newData,
+			   float bad, float thr_bad, size_t dgi_clip_gate,
+			   bool *boundary_mask, bool *bad_flag_mask);
+
+  void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
+			     int first_good_gate,
+			     const float *data, const float *thr_data, size_t nGates,
+			     float *newData,
+			     float bad, float thr_bad, size_t dgi_clip_gate,
+			     bool *boundary_mask, bool *bad_flag_mask);
+
+  void ForceUnfolding(const float *data, float *newData, size_t nGates,
+		      float nyquist_velocity, float dds_radd_eff_unamb_vel,
+		      float azimuth_angle_degrees, float elevation_angle_degrees,
+		      float ew_wind, float ns_wind, float ud_wind,
+		      int max_pos_folds, int max_neg_folds,
+		      size_t ngates_averaged,
+		      float center,
+		      float bad_data_value, size_t dgi_clip_gate,
+		      bool *boundary_mask);
+
+  void MergeFields(const float *data1, const float *data2,
+		   float *newData, size_t nGates,
+		   float bad, size_t dgi_clip_gate,
+		   bool *boundary_mask);
+
+  void RemoveRing(size_t from_km, size_t to_km,
+		  const float *data, float *newData, size_t nGates,
+		  float bad, size_t dgi_clip_gate, bool *boundary_mask);
+
+  void RainRate(float d_const, const float *data, float *newData, size_t nGates,
+		float bad, size_t dgi_clip_gate,
+		bool *boundary_mask);
+
+  void Abs(const float *data, float *newData, size_t nGates,
+	   float bad, size_t dgi_clip_gate, bool *boundary_mask);
+
+  void Exp(float f_const, const float *data, float *newData, size_t nGates,
+	   float bad, size_t dgi_clip_gate,
+	   bool *boundary_mask);
+
+
+  void RadialShear(size_t seds_gate_diff_interval, const float *data, float *newData,
+		   size_t nGates,
+		   float bad_data_value, size_t dgi_clip_gate,
+		   bool *boundary_mask);
+
+  void RemoveStormMotion(float wind, float speed, float dgi_dd_rotation_angle,
+			 float dgi_dd_elevation_angle,
+			 const float *data, float *new_data, size_t nGates,
+			 float bad, size_t dgi_clip_gate, bool *boundary_mask);
+
 
 private:
 

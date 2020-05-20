@@ -143,4 +143,38 @@ void se_funfold(const float *data, float *newData, size_t nGates,
 		float center,
 		float bad_data_value, size_t dgi_clip_gate,
 		bool *boundary_mask);
+
+void se_merge_fields(const float *data1, const float *data2,
+                     float *newData, size_t nGates,
+                     float bad, size_t dgi_clip_gate,
+                     bool *boundary_mask);
+
+// RemoveRing.cc
+void se_ring_zap(size_t from_km, size_t to_km,
+                 const float *data, float *newData, size_t nGates,
+                 float bad, size_t dgi_clip_gate, bool *boundary_mask);
+
+void se_rain_rate(float d_const, const float *data, float *newData, size_t nGates,
+                  float bad, size_t dgi_clip_gate,
+                  bool *boundary_mask);
+
+void se_absolute_value(const float *data, float *newData, size_t nGates,
+                       float bad, size_t dgi_clip_gate, bool *boundary_mask);
+
+// Exp.cc 
+void se_mult_const(float f_const, const float *data, float *newData, size_t nGates,
+                   float bad, size_t dgi_clip_gate,
+                   bool *boundary_mask);
+
+void se_radial_shear(size_t seds_gate_diff_interval, const float *data, float *newData, 
+		     size_t nGates,
+                     float bad_data_value, size_t dgi_clip_gate,
+                     bool *boundary_mask);
+
+void se_remove_storm_motion(float wind, float speed, float dgi_dd_rotation_angle,
+			    float dgi_dd_elevation_angle,
+			    const float *data, float *new_data, size_t nGates,
+			    float bad, size_t dgi_clip_gate, bool *boundary_mask);
+
+
 #endif
