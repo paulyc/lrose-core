@@ -246,9 +246,9 @@ const float *data, float *newData, size_t nGates,
   */
 
 
-  void SetBoundaryMask(RadxVol *vol, int rayIdx, int sweepIdx);
+  void SetBoundaryMask(RadxVol *vol, int rayIdx, int sweepIdx, bool useBoundaryMask);
   void SetBoundaryMaskOriginal(RadxVol *vol, int rayIdx, int sweepIdx);
-  void CheckForDefaultMask(RadxVol *vol, int rayIdx, int sweepIdx);
+  void CheckForDefaultMask(RadxVol *vol, int rayIdx, int sweepIdx, bool determineMask);
   void SetDefaultMask(RadxVol *vol, int rayIdx, int sweepIdx);
 
   void DetermineBoundaryMask(RadxVol *vol, int rayIdx, int sweepIdx); 

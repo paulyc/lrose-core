@@ -477,10 +477,11 @@ QString SoloFunctionsController::FLAG_GLITCHES(QString field, float constant, fl
 */
 
 
-void SoloFunctionsController::applyBoundary() {
-  
+void SoloFunctionsController::applyBoundary(bool useBoundaryMask) {
+
   //SoloFunctionsModel soloFunctionsModel;
-  soloFunctionsModel.SetBoundaryMask(_data, _currentRayIdx, _currentSweepIdx);
+  soloFunctionsModel.SetBoundaryMask(_data, _currentRayIdx, _currentSweepIdx,
+				     useBoundaryMask);
 }
 
 void SoloFunctionsController::setCurrentSweepToFirst() {

@@ -25,16 +25,20 @@ SoloFunctionsModel::SoloFunctionsModel() {
 
 // call this for each new ray, since the azimuth changes each time the ray changes
 void SoloFunctionsModel::SetBoundaryMask(RadxVol *vol,
-					 int rayIdx, int sweepIdx) {
+					 int rayIdx, int sweepIdx, bool useBoundaryMask) {
 
   _boundaryMaskSet = true;
 
-  CheckForDefaultMask(vol, rayIdx, sweepIdx);
+  bool determineMask = false;
+  if (useBoundaryMask)
+    determineMask = true;
+
+  CheckForDefaultMask(vol, rayIdx, sweepIdx, determineMask);
   //  SetBoundaryMaskOriginal(vol, rayIdx, sweepIdx);
 }
 
 
-void SoloFunctionsModel::CheckForDefaultMask(RadxVol *vol, int rayIdx, int sweepIdx) {
+void SoloFunctionsModel::CheckForDefaultMask(RadxVol *vol, int rayIdx, int sweepIdx, bool determineMask) {
 
   
   LOG(DEBUG) << "enter";
@@ -57,7 +61,7 @@ void SoloFunctionsModel::CheckForDefaultMask(RadxVol *vol, int rayIdx, int sweep
   // can we reuse the boundary mask?  If it is all true, we can reuse it
   // The boundary mask will be all true if the nBoundaryPoints < 3
   // if we have less than three points, then it is NOT a boundary
-  if (nBoundaryPoints < 3) { 
+  if ((nBoundaryPoints < 3) || !determineMask) { 
     // set default (all true) boundary mask; 
     SetDefaultMask(vol, rayIdx, sweepIdx);
   } else {

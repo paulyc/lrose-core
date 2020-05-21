@@ -6,6 +6,7 @@
 #include <QJSEngine>
 #include <QJSValue>
 #include <QJSValueIterator>
+#include <QCheckBox>
 #include <vector>
 #include <iostream>
 #include <toolsa/LogStream.hh>
@@ -97,10 +98,13 @@ Q_DECLARE_METATYPE(QVector<double>)
     connect(applyAct, &QAction::triggered, this, &ScriptEditorView::applyChanges);
     toolBar->addAction(applyAct);
 
+    useBoundaryWidget = new QCheckBox("Use Boundary", this);
+    useBoundaryWidget->setChecked(true);
 
     //scriptEditLayout->addWidget(actionWidget);
     scriptEditLayout->addWidget(forEachWidget);
-    scriptEditLayout->addWidget(oneTimeWidget);
+    // scriptEditLayout->addWidget(oneTimeWidget);
+    scriptEditLayout->addWidget(useBoundaryWidget);
     QWidget *scriptEditWidget = new QWidget();
     scriptEditWidget->setLayout(scriptEditLayout);
 
@@ -256,10 +260,12 @@ void ScriptEditorView::acceptFormulaInput()
     QString forEachRayScript = formulaInputForEachRay->getText();
     cerr << "ForEachRay text entered: " << forEachRayScript.toStdString() << endl;
     
+    bool useBoundary = useBoundaryWidget->isChecked(); 
+
     // Send the scripts to the controller for processing
     try {
       emit runOneTimeOnlyScript(oneTimeOnlyScript);
-      emit runForEachRayScript(forEachRayScript);
+      emit runForEachRayScript(forEachRayScript, useBoundary);
     /*
     // Grab the context before evaluating the formula
     //  YES! This works.  The new global variables are listed here;

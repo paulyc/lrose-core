@@ -49,7 +49,7 @@ public slots:
   // void needDataForField(string fieldName, int r, int c);
   void getVolumeChanges();
   void runOneTimeOnlyScript(QString script);
-  void runForEachRayScript(QString script);
+  void runForEachRayScript(QString script, bool useBoundary);
 private:
 
 

@@ -133,7 +133,7 @@ public:
   bool moreSweeps();
   void nextSweep();
 
-  void applyBoundary();
+  void applyBoundary(bool useBoundaryMask);
 
   void assign(string tempName, string userDefinedName);
 

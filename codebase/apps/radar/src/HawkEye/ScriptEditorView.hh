@@ -67,7 +67,7 @@ signals:
   //void needDataForField(string fieldName, int r, int c);
   void applyVolumeEdits();
   void runOneTimeOnlyScript(QString oneTimeOnlyScript);
-  void runForEachRayScript(QString forEachRayScript);
+  void runForEachRayScript(QString forEachRayScript, bool useBoundary);
 
 protected:
     void setupContextMenu();
@@ -96,6 +96,7 @@ private:
     QLabel *cellLabel;
     TextEdit *formulaInput;
     TextEdit *formulaInputForEachRay;
+    QCheckBox *useBoundaryWidget;
     //QTextEdit *formulaInput;
   // ScriptEditorDelegate *formulaInput;
 

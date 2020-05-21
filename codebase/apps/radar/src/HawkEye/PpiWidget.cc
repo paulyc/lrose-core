@@ -511,8 +511,9 @@ void PpiWidget::updateBeamII(const RadxRay *ray,
 {
 
   LOG(DEBUG) << "enter";
-
-  LOG(DEBUG) << "beam_data size = " << beam_data.size() << " by " << beam_data[0].size();
+  
+  LOG(DEBUG) << "beam_data size = " << beam_data.size();
+  // << " by " << beam_data[0].size();
   LOG(DEBUG) << "start_angle = " << start_angle;
   LOG(DEBUG) << "stop_angle = " << stop_angle;
 

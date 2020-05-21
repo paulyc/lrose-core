@@ -70,8 +70,8 @@ ScriptEditorController::ScriptEditorController(ScriptEditorView *view, ScriptEdi
 
   connect(_currentView, SIGNAL(runOneTimeOnlyScript(QString)),
 	  this, SLOT(runOneTimeOnlyScript(QString)));
-  connect(_currentView, SIGNAL(runForEachRayScript(QString)),
-	  this, SLOT(runForEachRayScript(QString)));
+  connect(_currentView, SIGNAL(runForEachRayScript(QString, bool)),
+	  this, SLOT(runForEachRayScript(QString, bool)));
 
 
     // connect controller slots to model signals 
@@ -398,7 +398,7 @@ uncate(100);
 }
 
 
-void ScriptEditorController::runForEachRayScript(QString script)
+void ScriptEditorController::runForEachRayScript(QString script, bool useBoundary)
 {
   LOG(DEBUG) << "enter";
 
@@ -439,7 +439,7 @@ uncate(100);
       // calculate boundary mask for each ray? 
       // Yes, when the ray index changes a new boundary mask is calculated 
       // in the SoloFunctionsController
-      _soloFunctionsController->applyBoundary();
+      _soloFunctionsController->applyBoundary(useBoundary);
 
       QJSValue result = engine.evaluate(script);
       if (result.isError()) {
