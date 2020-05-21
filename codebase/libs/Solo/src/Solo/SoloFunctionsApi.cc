@@ -658,7 +658,7 @@ void SoloFunctionsApi::CopyBadFlags(const float *data, size_t nGates,
   }
 }
 
-void FlaggedAssign(float constant, const float *data, float *newData, size_t nGates,
+void SoloFunctionsApi::FlaggedAssign(float constant, const float *data, float *newData, size_t nGates,
 		   size_t dgi_clip_gate,
 		   bool *boundary_mask, const bool *bad_flag_mask) {
   try {
@@ -668,7 +668,7 @@ void FlaggedAssign(float constant, const float *data, float *newData, size_t nGa
   }
 }
 
-void FlaggedCopy(const float *data, float *newData, size_t nGates,
+void SoloFunctionsApi::FlaggedCopy(const float *data, float *newData, size_t nGates,
 		 size_t dgi_clip_gate,
 		 bool *boundary_mask, const bool *bad_flag_mask) {
   //  try {
@@ -679,7 +679,7 @@ void FlaggedCopy(const float *data, float *newData, size_t nGates,
 }
 
 
-void FlagFreckles(float freckle_threshold, size_t freckle_avg_count,
+void SoloFunctionsApi::FlagFreckles(float freckle_threshold, size_t freckle_avg_count,
 		  const float *data, size_t nGates,
 		  float bad, size_t dgi_clip_gate,
 		  bool *boundary_mask, bool *bad_flag_mask) {
@@ -693,7 +693,7 @@ void FlagFreckles(float freckle_threshold, size_t freckle_avg_count,
   }
 }
 
-void FlagGlitches(float deglitch_threshold, int deglitch_radius,
+void SoloFunctionsApi::FlagGlitches(float deglitch_threshold, int deglitch_radius,
 		  int deglitch_min_bins,  // aka deglitch_min_gates                                
 		  const float *data, size_t nGates,
 		  float bad, size_t dgi_clip_gate,
@@ -708,7 +708,7 @@ void FlagGlitches(float deglitch_threshold, int deglitch_radius,
   }
 }
 
-void ThresholdFieldAbove(float scaled_thr,
+void SoloFunctionsApi::ThresholdFieldAbove(float scaled_thr,
 			 int first_good_gate,
 			 const float *data, const float *thr_data, size_t nGates,
 			 float *newData,
@@ -728,7 +728,7 @@ void ThresholdFieldAbove(float scaled_thr,
   }
 }
 
-void ThresholdFieldBelow(float scaled_thr,
+void SoloFunctionsApi::ThresholdFieldBelow(float scaled_thr,
 			 int first_good_gate,
 			 const float *data, const float *thr_data, size_t nGates,
 			 float *newData,
@@ -748,7 +748,7 @@ void ThresholdFieldBelow(float scaled_thr,
   }
 }
 
-void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
+void SoloFunctionsApi::ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
 			   int first_good_gate,
 			   const float *data, const float *thr_data, size_t nGates,
 			   float *newData,
@@ -768,7 +768,7 @@ void ThresholdFieldBetween(float scaled_thr1, float scaled_thr2,
 }
 
 
-void ForceUnfolding(const float *data, float *newData, size_t nGates,
+void SoloFunctionsApi::ForceUnfolding(const float *data, float *newData, size_t nGates,
 		    float nyquist_velocity, float dds_radd_eff_unamb_vel,
 		    float center,
 		    float bad_data_value, size_t dgi_clip_gate,
@@ -785,7 +785,7 @@ void ForceUnfolding(const float *data, float *newData, size_t nGates,
 }
 
 
-void MergeFields(const float *data1, const float *data2,
+void SoloFunctionsApi::MergeFields(const float *data1, const float *data2,
 		 float *newData, size_t nGates,
 		 float bad, size_t dgi_clip_gate,
 		 bool *boundary_mask) {
@@ -799,7 +799,7 @@ void MergeFields(const float *data1, const float *data2,
   }
 }
 
-void RemoveRing(size_t from_km, size_t to_km,
+void SoloFunctionsApi::RemoveRing(size_t from_km, size_t to_km,
 		const float *data, float *newData, size_t nGates,
 		float bad, size_t dgi_clip_gate, bool *boundary_mask) {
   try {
@@ -811,7 +811,7 @@ void RemoveRing(size_t from_km, size_t to_km,
   }
 }
 
-void RainRate(float d_const, const float *data, float *newData, size_t nGates,
+void SoloFunctionsApi::RainRate(float d_const, const float *data, float *newData, size_t nGates,
 	      float bad, size_t dgi_clip_gate,
 	      bool *boundary_mask) {
   try {
@@ -823,7 +823,7 @@ void RainRate(float d_const, const float *data, float *newData, size_t nGates,
   }
 }
 
-void Abs(const float *data, float *newData, size_t nGates,
+void SoloFunctionsApi::Abs(const float *data, float *newData, size_t nGates,
 	 float bad, size_t dgi_clip_gate, bool *boundary_mask) {
   try {
     se_absolute_value(data, newData, nGates,
@@ -833,7 +833,7 @@ void Abs(const float *data, float *newData, size_t nGates,
   }
 }
 
-void Exp(float f_const, const float *data, float *newData, size_t nGates,
+void SoloFunctionsApi::Exp(float f_const, const float *data, float *newData, size_t nGates,
 	 float bad, size_t dgi_clip_gate,
 	 bool *boundary_mask) {
   try {
@@ -846,7 +846,7 @@ void Exp(float f_const, const float *data, float *newData, size_t nGates,
 }
 
 
-void RadialShear(size_t seds_gate_diff_interval, const float *data, float *newData,
+void SoloFunctionsApi::RadialShear(size_t seds_gate_diff_interval, const float *data, float *newData,
 		 size_t nGates,
 		 float bad_data_value, size_t dgi_clip_gate,
 		 bool *boundary_mask) {
@@ -860,7 +860,7 @@ void RadialShear(size_t seds_gate_diff_interval, const float *data, float *newDa
   }
 }
 
-void RemoveStormMotion(float wind, float speed, float dgi_dd_rotation_angle,
+void SoloFunctionsApi::RemoveStormMotion(float wind, float speed, float dgi_dd_rotation_angle,
 		       float dgi_dd_elevation_angle,
 		       const float *data, float *new_data, size_t nGates,
 		       float bad, size_t dgi_clip_gate, bool *boundary_mask) {

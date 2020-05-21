@@ -34,7 +34,7 @@ void se_threshold_field(Where where, float scaled_thr1, float scaled_thr2,
 			const float *data, const float *thr_data, size_t nGates,
 			float *newData,
 			float bad, float thr_bad, size_t dgi_clip_gate,
-			bool *boundary_mask, bool *bad_flag_mask) 
+			bool *boundary_mask, const bool *bad_flag_mask) 
 {
 
   size_t nc;
